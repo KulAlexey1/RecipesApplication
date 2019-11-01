@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form #shoppingEditForm="ngForm" (ngSubmit)="saveIngredient()">
+      <div class="row">
+        <div class="col-sm-5 form-group">
+          <input type="hidden" name="id" ngModel #ingredientId="ngModel">
+
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" class="form-control" ngModel #ingredientName="ngModel" required>
+
+          <div *ngIf="ingredientName.errors != null && ingredientName.touched">
+            <span class="text-danger" *ngIf="ingredientName.errors['required']">
+              Please enter Name
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-2 form-group">
+          <label for="Amount">Amount</label>
+          <input type="number" id="amount" name="amount" class="form-control" ngModel #ingredientAmount="ngModel"
+            required pattern="^[1-9]+[0-9]*$">
+
+          <div *ngIf="ingredientAmount.errors != null && ingredientAmount.touched">
+            <span class="text-danger" *ngIf="ingredientAmount.errors['required']">
+              Please enter Amount
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn btn-success" type="submit"
+            [disabled]="!shoppingEditForm.valid">{{editedMode ? 'Update' : 'Add'}}</button>
+          <button class="btn btn-danger" type="button" (click)="deleteIngredient()"
+            [disabled]="ingredientId.value == null" *ngIf="editedMode">Delete</button>
+          <button class="btn btn-primary" type="button" (click)="clearIngredientForm()"
+            *ngIf="ingredientName.value !== '' || ingredientAmount.value !== ''">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
