@@ -1,19 +1,24 @@
-import { Ingredient } from './../shared/ingredient.model';
-import { Subject } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Ingredient } from "./../models/ingredient.model";
+import { Subject } from "rxjs";
+import { Injectable } from "@angular/core";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
   selectedIngredientChanged = new Subject<number>();
   private _ingredients: Ingredient[] = [
-    new Ingredient(1, 'Apples', 10),
-    new Ingredient(2, 'Oranges', 15)
+    new Ingredient(1, "Apples", 10),
+    new Ingredient(2, "Oranges", 15)
   ];
   private _lastId = 2;
 
   public get ingredients() {
     return this._ingredients.slice();
+  }
+
+  public set ingredients(ingredients: Ingredient[]) {
+    this._ingredients = ingredients;
+    this.ingredientsChanged.next(this.ingredients);
   }
 
   constructor() {}
