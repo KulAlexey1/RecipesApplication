@@ -4,6 +4,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
+import { httpInterceptorProviders } from './core/http-interceptors';
+
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./header/header.component";
 import { RecipesComponent } from "./recipes/recipes.component";
@@ -38,7 +40,10 @@ import { RecipeService } from "./core/services/recipe.service";
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [RecipeService],
+  providers: [
+    httpInterceptorProviders,
+    RecipeService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
