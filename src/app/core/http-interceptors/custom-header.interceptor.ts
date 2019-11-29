@@ -5,9 +5,12 @@ import { tap } from 'rxjs/operators';
 export class CustomHeaderInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log('Action before every request');
-        console.log(req);
+        const modifiedRequest = req.clone({
+            headers: req.headers.append('Custom-Header', 'Custom-Value')
+        });
+        console.log(modifiedRequest);
 
-        return next.handle(req).pipe(
+        return next.handle(modifiedRequest).pipe(
             tap((event) => {
                 console.log('Action after every request');
                 console.log(event);
