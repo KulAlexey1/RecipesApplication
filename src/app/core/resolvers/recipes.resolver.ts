@@ -1,3 +1,4 @@
+import { catchError } from 'rxjs/operators';
 import { Injectable } from "@angular/core";
 import {
   Resolve,
@@ -8,6 +9,7 @@ import {
 import { DataStorageService } from "../services/data-storage.service";
 import { RecipeService } from "../services/recipe.service";
 import { Recipe } from "../models/recipe.model";
+import { of } from 'rxjs';
 
 @Injectable({ providedIn: "root" })
 export class RecipesResolver implements Resolve<Recipe[]> {
@@ -20,7 +22,11 @@ export class RecipesResolver implements Resolve<Recipe[]> {
     const recipes = this._recipeService.recipes;
 
     if (this._recipeService.recipes.length === 0) {
-      return this._dataStorage.fetchRecipes();
+      return this._dataStorage.fetchRecipes().pipe(
+        catchError(error => {
+          return of([]);
+        })
+      );
     } else {
       return recipes;
     }

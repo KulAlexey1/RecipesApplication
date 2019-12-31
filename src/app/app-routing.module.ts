@@ -1,3 +1,4 @@
+import { AuthComponent } from './auth/auth.component';
 import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 import { RecipesComponent } from "./recipes/recipes.component";
 import { NgModule } from "@angular/core";
@@ -25,6 +26,10 @@ const appRoutes: Routes = [
     path: "shopping-list",
     component: ShoppingListComponent,
     children: [{ path: ":id", component: ShoppingEditComponent }]
+  },
+  {
+    path: "auth",
+    component: AuthComponent
   }
 ];
 

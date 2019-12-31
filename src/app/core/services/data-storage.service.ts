@@ -5,9 +5,7 @@ import { map, tap, catchError } from "rxjs/operators";
 import { throwError } from "rxjs";
 
 import { RecipeService } from "./recipe.service";
-import { ShoppingListService } from "./shopping-list.service";
 import { Recipe } from "../models/recipe.model";
-import { Ingredient } from "../models/ingredient.model";
 
 @Injectable({ providedIn: "root" })
 export class DataStorageService {
