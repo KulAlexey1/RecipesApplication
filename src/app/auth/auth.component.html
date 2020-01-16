@@ -24,8 +24,8 @@
                     minlength="6" />
             </div>
             <div>
-                <button type="submit" class="btn btn-primary" [disabled]="!authForm.valid">{{ isLoginMode ? 'Login' : 'Sign Up'}}</button> |
-                <button type="button" class="btn btn-primary" (click)="onSwitchMode()">Switch to {{ isLoginMode ? 'Sign Up' : 'Login'}}</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!authForm.valid">{{ isSignInMode ? 'Sign In' : 'Sign Up'}}</button> |
+                <button type="button" class="btn btn-primary" (click)="onSwitchMode()">Switch to {{ isSignInMode ? 'Sign Up' : 'Sign In'}}</button>
             </div>
         </form>
     </div>

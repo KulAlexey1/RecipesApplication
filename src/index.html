@@ -9,5 +9,26 @@
 </head>
 <body>
   <app-root></app-root>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBZNBG0d6QdyKDK6LA-ULj6DX_SIyALtc0",
+    authDomain: "recipesapp-d9b16.firebaseapp.com",
+    databaseURL: "https://recipesapp-d9b16.firebaseio.com",
+    projectId: "recipesapp-d9b16",
+    storageBucket: "recipesapp-d9b16.appspot.com",
+    messagingSenderId: "485310858223",
+    appId: "1:485310858223:web:c3feac6f1457f95eb0ac1a"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
 </body>
 </html>

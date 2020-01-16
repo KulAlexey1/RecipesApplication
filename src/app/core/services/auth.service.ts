@@ -1,25 +1,26 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 
-interface AuthResponseData {
-    idToken: string;
-    email: string;
-    refreshToken: string;
-    expiresIn: string;
-    localId: string;
-}
+import { Observable, from } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-    url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBZNBG0d6QdyKDK6LA-ULj6DX_SIyALtc0';
+    userData: Observable<firebase.User>;
 
-    constructor(private _http: HttpClient) {}
+    constructor(private angularFireAuth: AngularFireAuth) {
+        this.userData = angularFireAuth.authState;
+    }
 
-    signUp(email: string, password: string) {
-        return this._http.post<AuthResponseData>(this.url, {
-            email: email,
-            password: password,
-            returnSecureToken: true
-        });
+    signUp(email: string, password: string): Observable<firebase.auth.UserCredential> {
+        return from(this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password));
+    }
+
+    signIn(email: string, password: string): Observable<firebase.auth.UserCredential> {
+        return from(this.angularFireAuth.auth.signInWithEmailAndPassword(email, password));
+    }
+
+    signOut() {
+        this.angularFireAuth.auth
+            .signOut();
     }
 }
