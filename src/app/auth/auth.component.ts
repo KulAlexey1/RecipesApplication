@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../core/services/auth.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-auth',
@@ -8,6 +9,8 @@ import { AuthService } from '../core/services/auth.service';
 })
 export class AuthComponent {
     isSignInMode = true;
+    isLoading = false;
+    error = '';
 
     constructor(private _authService: AuthService) {}
 
@@ -20,21 +23,33 @@ export class AuthComponent {
             return;
         }
 
+        this.isLoading = true;
+        
         const email = authForm.value.email;
         const password = authForm.value.password;
 
         if (this.isSignInMode) {
-            this._authService.signIn(email, password).subscribe(res => {
-                console.log('Successfully signed in!', res);
-            }, error => {
-                console.log('Something is wrong: ', error.message);
-            });
+            this._authService.signIn(email, password)
+                .pipe(
+                    finalize(() => {
+                        this.isLoading = false;
+                    })
+                ).subscribe(res => {
+                    console.log('Successfully signed in!', res);
+                }, errorMessage => {
+                    this.error = errorMessage;                 
+                });
         } else {
-            this._authService.signUp(email, password).subscribe(res => {
-                console.log('Successfully signed up!', res);
-            }, error => {
-                console.log('Something is wrong: ', error.message);
-            });
+            this._authService.signUp(email, password)
+                .pipe(
+                    finalize(() => {
+                        this.isLoading = false;
+                    })
+                ).subscribe(res => {
+                    console.log('Successfully signed up!', res);
+                }, errorMessage => {
+                    this.error = errorMessage;
+                });
         }
 
         authForm.reset();
